@@ -51,5 +51,9 @@
 	<string>I need location permission when in use.</string>
 	<key>NSMicrophoneUsageDescription</key>
     <string>microphone</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>App needs access to photo lib for images</string>
+    <key>NSCameraUsageDescription</key>
+    <string>To capture photo please grant camera access</string>
 </dict>
 </plist>
