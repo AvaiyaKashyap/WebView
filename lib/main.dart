@@ -25,7 +25,7 @@ class WebViewContainer extends StatefulWidget {
 class WebViewContainerState extends State<WebViewContainer> {
   late WebViewController _webViewController;
 
-    Future<void> requestPermissionAndroid13() async {
+  Future<void> requestPermissionAndroid13() async {
     final permission = Permission.location;
     final permission1 = Permission.microphone;
     final permission2 = Permission.photos;
@@ -93,10 +93,10 @@ class WebViewContainerState extends State<WebViewContainer> {
       requestPermission();
     }
   }
-   String googleUrl = "";
+  String googleUrl = "";
 
   @override
-   initState() {
+  initState() {
     // TODO: implement initState
     super.initState();
     checkOS();
