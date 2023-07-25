@@ -30,8 +30,7 @@ class WebViewContainerState extends State<WebViewContainer> {
     final permission1 = Permission.microphone;
     final permission2 = Permission.photos;
     final permission3 = Permission.camera;
-    if (await permission.isDenied) {
-      await permission.request();
+    if (await permission.isDenied) { permission.request();
     }
     if (await permission1.isDenied) {
       await permission1.request();
@@ -94,7 +93,7 @@ class WebViewContainerState extends State<WebViewContainer> {
       requestPermission();
     }
   }
-
+   String googleUrl = "";
 
   @override
    initState() {
@@ -112,7 +111,12 @@ class WebViewContainerState extends State<WebViewContainer> {
           _webViewController = controller;
         },
         navigationDelegate: (NavigationRequest request) {
-          print("${request.url}");
+          print(request.url);
+          setState(() {
+            googleUrl = request.url;
+            //request.url = googleUrl;
+          });
+          print(googleUrl);
           if (request.url.startsWith('https://www.google.com/maps')) {
             launchMap();
 
@@ -124,8 +128,6 @@ class WebViewContainerState extends State<WebViewContainer> {
     );
   }
   void launchMap() async {
-    String googleUrl = "https://www.google.com/maps/search/?api=1&query=21.2329514,72.8160973";
-
     if (await canLaunch(googleUrl)) {
       await launch(googleUrl);
     }
