@@ -48,9 +48,7 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>I need location permission when in use.</string>
-	<key>NSMicrophoneUsageDescription</key>
-    <string>microphone</string>
+	<string>Ondispatch requires your location to provide you navigation details of your tickets.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>App needs access to photo lib for images</string>
     <key>NSCameraUsageDescription</key>

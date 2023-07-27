@@ -27,14 +27,14 @@ class WebViewContainerState extends State<WebViewContainer> {
 
   Future<void> requestPermissionAndroid13() async {
     final permission = Permission.location;
-    final permission1 = Permission.microphone;
+    // final permission1 = Permission.microphone;
     final permission2 = Permission.photos;
     final permission3 = Permission.camera;
     if (await permission.isDenied) { permission.request();
     }
-    if (await permission1.isDenied) {
-      await permission1.request();
-    }
+    // if (await permission1.isDenied) {
+    //   await permission1.request();
+    // }
     if (await permission2.isDenied) {
       print("---photos permission---");
       await permission2.request();
@@ -46,15 +46,15 @@ class WebViewContainerState extends State<WebViewContainer> {
   }
   Future<void> requestPermission() async {
     final permission = Permission.location;
-    final permission1 = Permission.microphone;
+    // final permission1 = Permission.microphone;
     final permission2 = Permission.storage;
     final permission3 = Permission.camera;
     if (await permission.isDenied) {
       await permission.request();
     }
-    if (await permission1.isDenied) {
-      await permission1.request();
-    }
+    // if (await permission1.isDenied) {
+    //   await permission1.request();
+    // }
     if (await permission2.isDenied) {
       print("---storage permission---");
       await permission2.request();
