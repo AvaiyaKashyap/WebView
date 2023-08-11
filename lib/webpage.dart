@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,6 +17,7 @@ class _webpageState extends State<webpage> {
   InAppWebViewController? inAppWebViewController;
   late PullToRefreshController pullToRefreshController;
   String pageurl = 'https://web.ondispatch.com/';
+  String mapsUrl = '';
 
   Future<void> requestPermissionAndroid13() async {
     final permission = Permission.location;
@@ -37,6 +39,7 @@ class _webpageState extends State<webpage> {
     }
     print("----13----");
   }
+
   Future<void> requestPermission() async {
     final permission = Permission.location;
     final permission1 = Permission.microphone;
@@ -67,12 +70,10 @@ class _webpageState extends State<webpage> {
       var model = androidInfo.model;
       print('Android $release (SDK $sdkInt), $manufacturer $model');
       var androidVersion = int.parse(release!);
-      assert(androidVersion is int);
       print(androidVersion);
-      if(androidVersion == 13){
+      if (androidVersion == 13) {
         requestPermissionAndroid13();
-      }
-      else{
+      } else {
         requestPermission();
       }
     }
@@ -90,7 +91,7 @@ class _webpageState extends State<webpage> {
   @override
   void initState() {
     super.initState();
-    //checkOS();
+    checkOS();
   }
 
   @override
@@ -103,18 +104,36 @@ class _webpageState extends State<webpage> {
           ),
           initialOptions: InAppWebViewGroupOptions(
             crossPlatform: InAppWebViewOptions(
-              useShouldOverrideUrlLoading: true,
+              javaScriptEnabled: true,
+                useShouldOverrideUrlLoading: true,
+               // javaScriptCanOpenWindowsAutomatically: true
             ),
           ),
+          
           shouldOverrideUrlLoading: (controller, navigationAction) async {
             // You can access the URL like this
             var url = navigationAction.request.url.toString();
+            //String mystring = 'https://www.google.com/maps/place/123%20Test%20Drive,%20West%20Palm%20Beach,%20FL%2033407,+EUA';
+            String search = '';
             print("Navigation URL: $url");
-            String testUrl = "https://www.google.com/maps/place/123%20Test%20Drive,%20West%20Palm%20Beach,%20FL%2033407,+EUA";
+            for (int i = 0; i < 22; i++) {
+              search += url[i];
+              //print(search);
+            }
+            // ignore: unused_local_variable
+            String testUrl =
+                "https://www.google.com/maps/place/123%20Test%20Drive,%20West%20Palm%20Beach,%20FL%2033407,+EUA";
 
-            if (url == testUrl) {
+            if (search == "https://www.google.com") {
               // This one means do not navigate
+              // _filepicker();
+              print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+              print(search);
+              setState(() {
+                mapsUrl = url;
+              });
               _openMaps();
+              print("Maps Url :- $mapsUrl");
               return NavigationActionPolicy.CANCEL;
             }
 
@@ -128,12 +147,26 @@ class _webpageState extends State<webpage> {
       ),
     );
   }
+
   void _openMaps() async {
-    String googleMapsUrl = 'https://www.google.com/maps'; // Replace with your Google Maps URL
-    if (await canLaunch(googleMapsUrl)) {
-      await launch(googleMapsUrl);
+    // String googleMapsUrl =
+    //     'https://www.google.com/maps/place/123%20Test%20Drive,%20West%20Palm%20Beach,%20FL%2033407,+EUA'; // Replace with your Google Maps URL
+     if (await canLaunch(mapsUrl)) {
+      await launch(mapsUrl);
     } else {
-      throw 'Could not launch $googleMapsUrl';
+      throw 'Could not launch $mapsUrl';
     }
   }
 }
+
+void _filepicker() async {
+  final ImagePicker _picker = ImagePicker();
+  final XFile? pickedFile = await _picker.pickImage(
+    source: ImageSource.camera, // Use ImageSource.gallery for file picker
+  );
+  if (pickedFile != null) {
+    // Handle the picked file
+    // You can send the picked file to the WebView if needed
+  }
+}
+

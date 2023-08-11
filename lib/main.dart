@@ -1,10 +1,4 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:web_ondispatch/webpage.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 void main()
@@ -14,7 +8,7 @@ void main()
     debugShowCheckedModeBanner: false,
     theme: ThemeData(useMaterial3: true),
     //home: WebViewContainer(initialUrl: 'https://web.ondispatch.com/',),
-    home: webpage(),
+    home: const webpage(),
   ));
 }
 // class WebViewContainer extends StatefulWidget {
